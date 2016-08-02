@@ -1,3 +1,6 @@
 body {
-    background-color: yellow;
+    background-color: green;
+}
+.home-box {
+    border: 1px solid #000000;
 }
