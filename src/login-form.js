@@ -4,6 +4,7 @@ import SiteName from './site-name';
 
 
 
+
 class LoginForm extends Component {
     render () {
         return(
@@ -20,7 +21,7 @@ class LoginForm extends Component {
                         </div>
                         <button type="submit" className="btn btn-default">Login</button>
                         <Link to="register-form">
-                            <button type="submit" className="btn btn-default">Register</button>
+                            <button className="btn btn-default">Register</button>
                         </Link>
                     </form>
                 </div>
@@ -30,5 +31,6 @@ class LoginForm extends Component {
     }
 
 }
+
 
 export default LoginForm;
