@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PasswordWarning from './password-warning';
 
 
 
@@ -6,42 +7,65 @@ class RegisterForm extends Component {
     constructor() {
         super();
         this.state = {
-            lists: []
+            passwordWarning: false
         }
     }
 
 
     handleSubmit(e) {
         e.preventDefault();
-
+        
         let signupData = {};
         signupData.username = this.refs.inputUsername.value;
         signupData.email = this.refs.inputEmail.value;
         signupData.password = this.refs.inputPassword.value;
+        signupData.rePassword = this.refs.inputRePassword.value;
+            
+         
+        
+            console.log("Send this signup data ", signupData);
+            let json = JSON.stringify(signupData, null, 2);
+            console.log("POST this JSON data to server ", json);
 
-        console.log("Send this signup data ", signupData);
-        let json = JSON.stringify(signupData, null, 2);
-        console.log("POST this JSON data to server ", json);
-
-        $.ajax({
-            type: "POST",
-            url: 'http://medlogotyp.se/register-cu/server/sign-up.php',
-            data: json,
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (data) {
-                console.log("Register OK? ", data);
-            }.bind(this),
-            failure: function (errMsg) {
-                console.log("Register failed! " + errMsg);
-            }.bind(this)
-        });
+        if(signupData.password === signupData.rePassword) {
+            $.ajax({
+                type: "POST",
+                url: 'http://medlogotyp.se/register-cu/server/sign-up.php',
+                data: json,
+                crossDomain: true,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                complete: function (data) {
+                    if(data.status === 400) {
+                        console.log("400 Bad Request: Please fill in all fields")
+                    }else if(data.status === 409) {
+                        console.log("409 Conflict: Username or Email has already in data base")
+                    }else {
+                        console.log("200 OK ", data)
+                    }
+    
+                }.bind(this)
+            });
+        }else {
+            console.log("Password and Confirm password do not match!")
+        }
     }
 
     
     handleInputValue(e) {
         console.log(e.target.value)
-        console.log(this)
+        //console.log("Password ", this.refs.inputPassword.value)
+        //console.log("rePassword ", this.refs.inputRePassword.value)
+        //console.log(this)
+      /*  let password = this.refs.inputPassword.value
+        let rePassword = this.refs.inputRePassword.value
+        
+
+        if(password !== rePassword) {
+            this.setState({ passwordWarning : true })
+        }else {
+            this.setState({ passwordWarning : false })
+        } */
     }
     render () {
         return(
@@ -50,8 +74,8 @@ class RegisterForm extends Component {
                     <div className="panel panel-default" style={{ marginTop:100 }}>
                         <div className="panel-body">
                             <h5 className="text-center">SIGN UP</h5>
-                            {this.state.newValues}
-                             <form className="form form-signup" role="form" method="POST"
+                            { this.state.passwordWarning ? <PasswordWarning /> : null }
+                            <form className="form form-signup" role="form"
                                   onSubmit={this.handleSubmit.bind(this)}>
                                 <div className="form-group">
                                     <div className="input-group">
