@@ -5,7 +5,7 @@ class SiteName extends Component {
     render () {
         return (
             <div className="navbar-left">
-                <Link to="/" className="navbar-brand" href="#">Sitename</Link>
+                <Link to="/" className="navbar-brand">Sitename</Link>
             </div>
 
         );

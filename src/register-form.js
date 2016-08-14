@@ -1,5 +1,8 @@
-import React, { Component } from 'react';
-import PasswordWarning from './password-warning';
+import React, { Component } from 'react'
+import {EmptyInputWarning, PasswordWarning, UsernameExist, Congratulations}  from './warning-message'
+import Loading from'./loading'
+require('../assets/style.css')
+
 
 
 
@@ -7,7 +10,12 @@ class RegisterForm extends Component {
     constructor() {
         super();
         this.state = {
-            passwordWarning: false
+            emptyInputWarning: false,
+            passwordWarning: false,
+            usernameExist: false,
+            confirmBox: false,
+            loading: false
+
         }
     }
 
@@ -20,52 +28,47 @@ class RegisterForm extends Component {
         signupData.email = this.refs.inputEmail.value;
         signupData.password = this.refs.inputPassword.value;
         signupData.rePassword = this.refs.inputRePassword.value;
-            
-         
         
             console.log("Send this signup data ", signupData);
             let json = JSON.stringify(signupData, null, 2);
             console.log("POST this JSON data to server ", json);
+        
+        if(signupData.username != "" && signupData.email != "" 
+            && signupData.password != "" && signupData.rePassword != "") {
+            this.setState({ emptyInputWarning : false })
+            if (signupData.password === signupData.rePassword) {
+                this.setState({ passwordWarning : false })
+                $.ajax({
+                    type: "POST",
+                    url: 'http://medlogotyp.se/register-cu/server/sign-up.php',
+                    data: json,
+                    crossDomain: true,
+                    contentType: "application/json; charset=utf-8",
+                    complete: function (data) {
+                        if (data.status !== 200) {
+                            this.setState({ usernameExist : true })
+                            this.setState({ congratulations : false })
+                        } else {
+                            this.setState({ usernameExist : false })
+                            this.setState({ loading: true })
+                            setTimeout(function(){
+                                return this.setState({ confirmBox: true, loading: false })
+                            }.bind(this), 3000)
+                            //hashHistory.push('/success');
+                        }
 
-        if(signupData.password === signupData.rePassword) {
-            $.ajax({
-                type: "POST",
-                url: 'http://medlogotyp.se/register-cu/server/sign-up.php',
-                data: json,
-                crossDomain: true,
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                complete: function (data) {
-                    if(data.status === 400) {
-                        console.log("400 Bad Request: Please fill in all fields")
-                    }else if(data.status === 409) {
-                        console.log("409 Conflict: Username or Email has already in data base")
-                    }else {
-                        console.log("200 OK ", data)
-                    }
-    
-                }.bind(this)
-            });
-        }else {
-            console.log("Password and Confirm password do not match!")
+                    }.bind(this)
+                });
+            } else {
+                this.setState({ passwordWarning : true })
+            }
+        } else {
+            this.setState({ emptyInputWarning : true })
         }
     }
 
-    
     handleInputValue(e) {
         console.log(e.target.value)
-        //console.log("Password ", this.refs.inputPassword.value)
-        //console.log("rePassword ", this.refs.inputRePassword.value)
-        //console.log(this)
-      /*  let password = this.refs.inputPassword.value
-        let rePassword = this.refs.inputRePassword.value
-        
-
-        if(password !== rePassword) {
-            this.setState({ passwordWarning : true })
-        }else {
-            this.setState({ passwordWarning : false })
-        } */
     }
     render () {
         return(
@@ -73,8 +76,13 @@ class RegisterForm extends Component {
                 <div className="col-md-4 col-md-offset-4">
                     <div className="panel panel-default" style={{ marginTop:100 }}>
                         <div className="panel-body">
+                            { this.state.confirmBox ? <Congratulations /> : null }
                             <h5 className="text-center">SIGN UP</h5>
+                            { this.state.loading ? <Loading /> : null }
+                            { this.state.emptyInputWarning ? <EmptyInputWarning /> : null }
                             { this.state.passwordWarning ? <PasswordWarning /> : null }
+                            { this.state.usernameExist ? <UsernameExist /> : null }
+                            
                             <form className="form form-signup" role="form"
                                   onSubmit={this.handleSubmit.bind(this)}>
                                 <div className="form-group">
@@ -119,15 +127,18 @@ class RegisterForm extends Component {
                                         <input onChange={this.handleInputValue.bind(this)}
                                                ref="inputRePassword" 
                                                className="form-control" 
-                                               placeholder="Re-password" />
+                                               placeholder="Confirm Password" />
                                     </div>
                                 </div>
-                                <button className="btn btn-sm btn-primary btn-block" role="button">REGISTER NOW</button>
+                                    <button className="btn btn-sm btn-primary btn-block" role="button">
+                                        REGISTER NOW
+                                    </button>
                             </form>
                         </div>
                     </div>
                 </div>
             </div>
+            
         );
     }
 
