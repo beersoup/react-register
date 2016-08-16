@@ -4,18 +4,12 @@ import SiteName from './site-name';
 import { EmptyLogin } from './warning-message'
 import { IncorrectLogin } from './warning-message'
 
-
-
-
-
 class LoginForm extends Component {
     constructor() {
         super();
-        
         this.state = {
             emptyLogin: false,
             incorrectLogin: false
-            
         }
     }
     handleSubmit(e) {
@@ -25,7 +19,6 @@ class LoginForm extends Component {
         loginData.password = this.refs.passwordLogin.value
         
         let jsonLogin = JSON.stringify(loginData, null, 2)
-        console.log("Json data ",jsonLogin)
         
         if(loginData.username != "" && loginData.password != "") {
             this.setState({ emptyLogin: false })
@@ -44,20 +37,18 @@ class LoginForm extends Component {
                     }
                 }.bind(this)
             })
-            
         }else {
             this.setState({ emptyLogin: true, incorrectLogin: false })
         }
     }
     
-    clickregisterHandle() {
+    clickRegisterHandle() {
         this.refs.usernameLogin.value = ""
         this.refs.passwordLogin.value = ""
         this.setState({ emptyLogin: false, incorrectLogin: false })
     }
     render () {
         return(
-           
             <div className="navbar navbar-default navbar-fixed-top">
                 <div className="container">
                     <SiteName />
@@ -82,7 +73,7 @@ class LoginForm extends Component {
                         <button type="submit" className="btn btn-default">Login</button>
                         <Link to="register-form">
                             <button className="btn btn-default" 
-                                    onClick={this.clickregisterHandle.bind(this)}>Register</button>
+                                    onClick={this.clickRegisterHandle.bind(this)}>Register</button>
                         </Link>
                     </form>
                 </div>
@@ -90,8 +81,5 @@ class LoginForm extends Component {
                
         );
     }
-
 }
-
-
 export default LoginForm;
