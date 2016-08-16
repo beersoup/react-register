@@ -1,12 +1,23 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 import SiteName from './site-name';
+import { EmptyLogin } from './warning-message'
+import { IncorrectLogin } from './warning-message'
 
 
 
 
 
 class LoginForm extends Component {
+    constructor() {
+        super();
+        
+        this.state = {
+            emptyLogin: false,
+            incorrectLogin: false
+            
+        }
+    }
     handleSubmit(e) {
        e.preventDefault()
         let loginData = {}
@@ -17,6 +28,7 @@ class LoginForm extends Component {
         console.log("Json data ",jsonLogin)
         
         if(loginData.username != "" && loginData.password != "") {
+            this.setState({ emptyLogin: false })
             $.ajax({
                 type: 'POST',
                 url: 'http://medlogotyp.se/register-cu/server/login.php',
@@ -25,16 +37,23 @@ class LoginForm extends Component {
                 contentType: "application/json; charset=utf-8",
                 complete: function(data) {
                     if(data.status !== 200) {
-                        console.log("Username or Password incorrect")
+                        this.setState({ incorrectLogin: true })
                     }else {
+                        this.setState({ incorrectLogin: false })
                         console.log("Logged in")
                     }
-                }
+                }.bind(this)
             })
             
         }else {
-            console.log("Please fill in all fields")
+            this.setState({ emptyLogin: true, incorrectLogin: false })
         }
+    }
+    
+    clickregisterHandle() {
+        this.refs.usernameLogin.value = ""
+        this.refs.passwordLogin.value = ""
+        this.setState({ emptyLogin: false, incorrectLogin: false })
     }
     render () {
         return(
@@ -44,6 +63,8 @@ class LoginForm extends Component {
                     <SiteName />
                     <form className="navbar-form navbar-right" role="search"
                           onSubmit={this.handleSubmit.bind(this)}>
+                        {this.state.emptyLogin ? <EmptyLogin /> : null}
+                        {this.state.incorrectLogin ? <IncorrectLogin /> : null}
                         <div className="form-group">
                             <input 
                                 type="text" 
@@ -60,7 +81,8 @@ class LoginForm extends Component {
                         </div>
                         <button type="submit" className="btn btn-default">Login</button>
                         <Link to="register-form">
-                            <button className="btn btn-default">Register</button>
+                            <button className="btn btn-default" 
+                                    onClick={this.clickregisterHandle.bind(this)}>Register</button>
                         </Link>
                     </form>
                 </div>

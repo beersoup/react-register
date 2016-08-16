@@ -49,6 +49,28 @@ export class Congratulations extends Component {
     }
 }
 
+export class EmptyLogin extends Component {
+    render () {
+        return (
+            <div className="navbar-form navbar-left" style={{ color: 'red' }}>
+                Please fill in all fields..!
+            </div>
+        );
+    }
+}
+export class IncorrectLogin extends Component {
+    render () {
+        return (
+            <div className="navbar-form navbar-left" style={{ color: 'red' }}>
+                Username or Password incorrect..!
+            </div>
+        );
+    }
+}
+
+
+
+
 
 
 
