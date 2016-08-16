@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import {EmptyInputWarning, PasswordWarning, UsernameExist, Congratulations}  from './warning-message'
+import { EmptyInputWarning, PasswordWarning, UsernameExist, Congratulations }  from './warning-message'
 import Loading from'./loading'
+import Input from './input'
 require('../assets/style.css')
 
 
@@ -66,10 +67,7 @@ class RegisterForm extends Component {
             this.setState({ emptyInputWarning : true })
         }
     }
-
-    handleInputValue(e) {
-        console.log(e.target.value)
-    }
+    
     render () {
         return(
             <div className="row">
@@ -85,51 +83,18 @@ class RegisterForm extends Component {
                             
                             <form className="form form-signup" role="form"
                                   onSubmit={this.handleSubmit.bind(this)}>
-                                <div className="form-group">
-                                    <div className="input-group">
-                                        <span className="input-group-addon">
-                                            <span className="glyphicon glyphicon-user"></span>
-                                        </span>
-                                        <input onChange={this.handleInputValue.bind(this)}
-                                               type="text"
-                                               ref="inputUsername"
-                                               className="form-control" 
-                                               placeholder="Username" />
-                                    </div>
-                                </div>
-                                <div className="form-group">
-                                    <div className="input-group">
-                                        <span className="input-group-addon">
-                                            <span className="glyphicon glyphicon-envelope"></span>
-                                        </span>
-                                        <input onChange={this.handleInputValue.bind(this)}
-                                               ref="inputEmail"
-                                               className="form-control" 
-                                               placeholder="Email Address" />
-                                    </div>
-                                </div>
-                                <div className="form-group">
-                                    <div className="input-group">
-                                        <span className="input-group-addon">
-                                            <span className="glyphicon glyphicon-lock"></span>
-                                        </span>
-                                        <input onChange={this.handleInputValue.bind(this)}
-                                               ref="inputPassword" 
-                                               className="form-control" 
-                                               placeholder="Password" />
-                                    </div>
-                                </div>
-                                <div className="form-group">
-                                    <div className="input-group">
-                                        <span className="input-group-addon">
-                                            <span className="glyphicon glyphicon-lock"></span>
-                                        </span>
-                                        <input onChange={this.handleInputValue.bind(this)}
-                                               ref="inputRePassword" 
-                                               className="form-control" 
-                                               placeholder="Confirm Password" />
-                                    </div>
-                                </div>
+                                <Input classInput="glyphicon glyphicon-user" 
+                                       refInput="inputUsername"
+                                       placeholderInput="Username" />
+                                <Input classInput="glyphicon glyphicon-envelope"
+                                       refInput="inputEmail"
+                                       placeholderInput="Email Address" />
+                                <Input classInput="glyphicon glyphicon-lock"
+                                       refInput="inputPassword"
+                                       placeholderInput="Password" />
+                                <Input classInput="glyphicon glyphicon-lock"
+                                       refInput="inputRePassword"
+                                       placeholderInput="Confirm Password" />
                                     <button className="btn btn-sm btn-primary btn-block" role="button">
                                         REGISTER NOW
                                     </button>

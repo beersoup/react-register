@@ -22,6 +22,11 @@ module.exports = {
       compressor: {
         warnings: false
       }
+    }),
+    new webpack.NoErrorsPlugin(),
+    new webpack.ProvidePlugin({
+      $: "jquery",
+      jQuery: "jquery"
     })
   ],
   module: {

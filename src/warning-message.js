@@ -4,7 +4,7 @@ require('../assets/style.css')
 
 
 export class EmptyInputWarning extends Component {
-    render () {
+    render () { 
         return (
             <div className="alert alert-danger" role="alert" style={{ padding: 8 }}>
                 Please fill in all fields!
@@ -34,12 +34,13 @@ export class UsernameExist extends Component {
 }
 
 export class Congratulations extends Component {
+    
     render () {
         return (
             <div id="blackBg">
                 <div className="alert alert-success container" role="alert" id="confirmBox">
-                    <h3 className="text-center">Well done...You successfully registered!&nbsp;
-                        <a href="#" className="alert-link">Go to login</a></h3>
+                    <h3 className="text-center">Well done...You successfully registered!
+                        <a href="#" className="alert-link" style={{ paddingLeft: 10 }}>Go to login</a></h3>
                 </div>
             </div>
         );
