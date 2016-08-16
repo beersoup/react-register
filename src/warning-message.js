@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
+import { Link } from 'react-router'
 require('../assets/style.css')
 
 
@@ -40,7 +41,8 @@ export class Congratulations extends Component {
             <div id="blackBg">
                 <div className="alert alert-success container" role="alert" id="confirmBox">
                     <h3 className="text-center">Well done...You successfully registered!
-                        <a href="#" className="alert-link" style={{ paddingLeft: 10 }}>Go to login</a></h3>
+                        <Link to="login-form" className="alert-link" style={{ paddingLeft: 10 }}>Go to login</Link>
+                    </h3>
                 </div>
             </div>
         );

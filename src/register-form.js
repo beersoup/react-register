@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { EmptyInputWarning, PasswordWarning, UsernameExist, Congratulations }  from './warning-message'
 import Loading from'./loading'
-import Input from './input'
 require('../assets/style.css')
 
 
@@ -83,18 +82,51 @@ class RegisterForm extends Component {
                             
                             <form className="form form-signup" role="form"
                                   onSubmit={this.handleSubmit.bind(this)}>
-                                <Input classInput="glyphicon glyphicon-user" 
-                                       refInput="inputUsername"
-                                       placeholderInput="Username" />
-                                <Input classInput="glyphicon glyphicon-envelope"
-                                       refInput="inputEmail"
-                                       placeholderInput="Email Address" />
-                                <Input classInput="glyphicon glyphicon-lock"
-                                       refInput="inputPassword"
-                                       placeholderInput="Password" />
-                                <Input classInput="glyphicon glyphicon-lock"
-                                       refInput="inputRePassword"
-                                       placeholderInput="Confirm Password" />
+                                <div className="form-group">
+                                    <div className="input-group">
+                                        <span className="input-group-addon">
+                                            <span className="glyphicon glyphicon-user"></span>
+                                        </span>
+                                        <input
+                                               type="text"
+                                               ref="inputUsername"
+                                               className="form-control" 
+                                               placeholder="Username" />
+                                    </div>
+                                </div>
+                                <div className="form-group">
+                                    <div className="input-group">
+                                        <span className="input-group-addon">
+                                            <span className="glyphicon glyphicon-envelope"></span>
+                                        </span>
+                                        <input
+                                               ref="inputEmail"
+                                               className="form-control" 
+                                               placeholder="Email Address" />
+                                    </div>
+                                </div>
+                                <div className="form-group">
+                                    <div className="input-group">
+                                        <span className="input-group-addon">
+                                            <span className="glyphicon glyphicon-lock"></span>
+                                        </span>
+                                        <input
+                                               ref="inputPassword" 
+                                               className="form-control" 
+                                               placeholder="Password" />
+                                    </div>
+                                </div>
+                                <div className="form-group">
+                                    <div className="input-group">
+                                        <span className="input-group-addon">
+                                            <span className="glyphicon glyphicon-lock"></span>
+                                        </span>
+                                        <input
+                                               ref="inputRePassword" 
+                                               className="form-control" 
+                                               placeholder="Confirm Password" />
+                                    </div>
+                                </div>
                                     <button className="btn btn-sm btn-primary btn-block" role="button">
                                         REGISTER NOW
                                     </button>
