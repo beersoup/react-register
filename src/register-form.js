@@ -3,9 +3,6 @@ import { EmptyInputWarning, PasswordWarning, UsernameExist, Congratulations }  f
 import Loading from'./loading'
 require('../assets/style.css')
 
-
-
-
 class RegisterForm extends Component {
     constructor() {
         super();
@@ -15,14 +12,11 @@ class RegisterForm extends Component {
             usernameExist: false,
             confirmBox: false,
             loading: false
-
         }
     }
-
-
+    
     handleSubmit(e) {
         e.preventDefault();
-        
         let signupData = {};
         signupData.username = this.refs.inputUsername.value;
         signupData.email = this.refs.inputEmail.value;
